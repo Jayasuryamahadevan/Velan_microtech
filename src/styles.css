@@ -1,0 +1,700 @@
+/* ════════════════════════════════════════════
+   VELAN MICROTECH — Minimalist Elite (v3)
+   "Luxury Tech" · Vast Space · 3D Motion
+   ════════════════════════════════════════════ */
+
+/* ── Fonts: Instrument Sans + Inter ── */
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@300;400;500;600;700&family=Inter:wght@200;300;400;500&display=swap');
+
+/* ── Elite Minimalist Tokens ── */
+:root {
+    --bg-primary: #FFFFFF;
+    --bg-secondary: #FBFBFA;
+    /* Subtle Bone/Luxury White */
+    --bg-glass: rgba(255, 255, 255, 0.8);
+
+    --text-primary: #0F0F0F;
+    /* Almost pure black for extreme contrast */
+    --text-secondary: #5F5F5F;
+    --text-muted: #AFAFAF;
+
+    --accent: #111111;
+    /* Minimalist accent - deep charcoal */
+    --accent-gold: #C5A059;
+    /* Subtle luxury gold for highlights */
+
+    --border-thin: rgba(0, 0, 0, 0.04);
+    --border-rich: rgba(0, 0, 0, 0.1);
+
+    --font-heading: 'Instrument Sans', sans-serif;
+    --font-body: 'Inter', sans-serif;
+
+    --max-w: 1440px;
+    /* Wider for luxury feel */
+    --v-space: clamp(8rem, 15vw, 12rem);
+    /* Massive vertical padding */
+    --h-space: clamp(2rem, 8vw, 6rem);
+
+    --ease-minimal: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Global Reset ── */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: initial;
+    /* Controlled by GSAP/ScrollTrigger */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    line-height: 1.5;
+    overflow-x: hidden;
+    font-weight: 300;
+    /* Lighter body text for elegance */
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    /* Minimalist thin weights for headings */
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.4s var(--ease-minimal);
+}
+
+a:hover {
+    opacity: 0.6;
+}
+
+/* ════════════════════════════════
+   PRELOADER (Luxury Minimalist)
+   ════════════════════════════════ */
+#preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    will-change: transform, opacity;
+}
+
+.preloader-v {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    opacity: 0;
+}
+
+.preloader-line {
+    width: 1px;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.preloader-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #111;
+    transform: translateY(-100%);
+    will-change: transform;
+}
+
+/* ════════════════════════════════
+   CUSTOM CURSOR (Precision)
+   ════════════════════════════════ */
+.cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 99998;
+    mix-blend-mode: difference;
+    will-change: transform;
+}
+
+.cursor-dot {
+    width: 4px;
+    height: 4px;
+    background: #FFF;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.cursor-ring {
+    width: 30px;
+    height: 30px;
+    border: 0.5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* ════════════════════════════════
+   NAVIGATION
+   ════════════════════════════════ */
+.nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 3rem var(--h-space);
+    transition: 0.6s var(--ease-luxury);
+    opacity: 0;
+    /* Hidden before entrance GSAP */
+}
+
+.nav.scrolled {
+    padding: 1.5rem var(--h-space);
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-thin);
+}
+
+.nav-inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-brand {
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.nav-links {
+    display: flex;
+    gap: 4rem;
+}
+
+.nav-links a {
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 400;
+    opacity: 0.4;
+}
+
+.nav-links a.active,
+.nav-links a:hover {
+    opacity: 1;
+}
+
+/* ════════════════════════════════
+   HERO (Minimalist Luxury)
+   ════════════════════════════════ */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 var(--h-space);
+    position: relative;
+    background: #FFFFFF;
+}
+
+.hero-inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+    opacity: 0;
+    /* Hidden before entrance GSAP */
+}
+
+.hero-eyebrow {
+    font-size: 0.9rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    display: block;
+}
+
+.hero-title {
+    font-size: clamp(4rem, 12vw, 8rem);
+    line-height: 0.95;
+    margin-bottom: 3rem;
+    letter-spacing: -0.06em;
+}
+
+.hero-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 4rem;
+}
+
+.hero-desc {
+    max-width: 400px;
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* Parallax Box */
+.hero-visual-container {
+    position: absolute;
+    right: var(--h-space);
+    bottom: 10%;
+    width: 40vw;
+    height: 50vh;
+    perspective: 1000px;
+    opacity: 0;
+    /* Hidden before entrance GSAP */
+}
+
+.hero-img-wrap {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--bg-secondary);
+    will-change: transform;
+}
+
+.hero-img-wrap img {
+    width: 100%;
+    height: 120%;
+    object-fit: cover;
+    filter: grayscale(20%);
+    transition: filter 0.8s;
+}
+
+.hero-img-wrap:hover img {
+    filter: grayscale(0%);
+}
+
+/* ════════════════════════════════
+   SECTIONS (Vast Space)
+   ════════════════════════════════ */
+.section {
+    padding: var(--v-space) var(--h-space);
+    max-width: var(--max-w);
+    margin: 0 auto;
+}
+
+.section-header {
+    margin-bottom: 6rem;
+    max-width: 800px;
+}
+
+.section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.section-title {
+    font-size: clamp(3rem, 6vw, 4.5rem);
+    margin-bottom: 2rem;
+}
+
+/* ════════════════════════════════
+   PRODUCT BLOCKS (Modernist)
+   ════════════════════════════════ */
+.product-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10rem;
+    align-items: start;
+    margin-bottom: var(--v-space);
+}
+
+.product-info {
+    padding-top: 4rem;
+}
+
+.product-id {
+    font-family: var(--font-heading);
+    font-size: 4rem;
+    color: var(--text-muted);
+    opacity: 0.2;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.product-title {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+}
+
+.product-desc {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 4rem;
+}
+
+/* 3D Parallax Image */
+.img-3d-wrap {
+    width: 100%;
+    aspect-ratio: 4/5;
+    background: var(--bg-secondary);
+    position: relative;
+    overflow: visible;
+    /* To allow floating elements */
+    perspective: 2000px;
+}
+
+.img-3d-inner {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    will-change: transform;
+}
+
+.img-3d-inner img {
+    width: 100%;
+    height: 130%;
+    object-fit: cover;
+    transform: translateY(-15%);
+}
+
+/* ════════════════════════════════
+   CARDS (Refined Minimal)
+   ════════════════════════════════ */
+.feature-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+}
+
+.feature-item {
+    border-top: 1px solid var(--border-thin);
+    padding-top: 2rem;
+}
+
+.feature-item h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.feature-item p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    opacity: 0.8;
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4rem;
+}
+
+.about-card {
+    text-align: left;
+}
+
+.about-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+}
+
+.about-card p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+/* ════════════════════════════════
+   WORKSHOPS (Elite Minimalist)
+   ════════════════════════════════ */
+.workshop-announcement {
+    margin-top: 3rem;
+    padding: 1.5rem 2rem;
+    background: var(--bg-secondary);
+    border-left: 2px solid var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    max-width: fit-content;
+}
+
+.ann-dot {
+    width: 6px;
+    height: 6px;
+    background: #FF4B2B;
+    border-radius: 50%;
+    animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.4;
+        transform: scale(1.5);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.workshop-announcement p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.ann-cta {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    border-bottom: 1px solid var(--text-primary);
+    padding-bottom: 2px;
+}
+
+.workshop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 3rem;
+}
+
+.workshop-card {
+    padding: 4rem 3rem;
+    background: #FFFFFF;
+    border: 1px solid var(--border-thin);
+    transition: 0.8s var(--ease-luxury);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.workshop-card:hover {
+    border-color: var(--text-primary);
+    transform: translateY(-10px);
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.03);
+}
+
+.workshop-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+}
+
+.workshop-tag {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-weight: 600;
+    color: #FFF;
+    background: #111;
+    padding: 0.4rem 1rem;
+    width: fit-content;
+}
+
+.workshop-tag.coming-soon {
+    background: transparent;
+    border: 1px solid var(--border-rich);
+    color: var(--text-muted);
+}
+
+.workshop-seats {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    color: #FF4B2B;
+}
+
+.workshop-card h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+}
+
+.workshop-card p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-bottom: 3rem;
+    line-height: 1.7;
+    flex-grow: 1;
+}
+
+.workshop-meta {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    border-top: 1px solid var(--border-thin);
+    padding-top: 1.5rem;
+}
+
+.workshop-date,
+.workshop-duration {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.workshop-link {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+}
+
+/* ════════════════════════════════
+   CONTACT (Precision Elegance)
+   ════════════════════════════════ */
+.contact-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 8rem;
+}
+
+.contact-info h2 {
+    font-size: 4rem;
+    margin-bottom: 2rem;
+}
+
+.contact-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+}
+
+.form-group.full {
+    grid-column: span 2;
+}
+
+.form-group label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border-rich);
+    padding: 1rem 0;
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    border-radius: 0;
+    transition: border-color 0.4s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--text-primary);
+}
+
+.form-btn {
+    grid-column: span 2;
+    margin-top: 2rem;
+    padding: 1.5rem 4rem;
+    background: var(--text-primary);
+    color: #FFF;
+    width: fit-content;
+    font-size: 0.9rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: 0.4s;
+}
+
+.form-btn:hover {
+    background: #333;
+    transform: translateY(-2px);
+}
+
+/* ════════════════════════════════
+   MOTION UTILITIES
+   ════════════════════════════════ */
+.reveal-text {
+    overflow: hidden;
+}
+
+.reveal-text span {
+    display: block;
+    transform: translateY(105%);
+}
+
+/* ════════════════════════════════
+   RESPONSIVE
+   ════════════════════════════════ */
+@media (max-width: 1024px) {
+    .nav {
+        padding: 2rem;
+    }
+
+    .hero-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2rem;
+    }
+
+    .hero-visual-container {
+        position: relative;
+        width: 100%;
+        right: 0;
+        bottom: 0;
+        margin-top: 4rem;
+        height: 50vh;
+    }
+
+    .product-block {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-wrap {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+}
